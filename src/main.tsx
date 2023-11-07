@@ -1,14 +1,13 @@
-// == Imports
 import store from './store';
 import { randomHexColor, generateSpanColor } from './utils/color';
 import { AppState } from './@types';
 
 import './styles/index.scss';
 
-// Pour récupérer les données stocker dans mon store, je vais faire un store.getState()
+// Pour récupérer les données stocker dans mon store
 console.log(store.getState());
 
-// == State
+// INIT STATE
 const state: AppState = {
   firstColor: '#e367a4',
   lastColor: '#48b1f3',
@@ -51,12 +50,12 @@ function renderColors() {
   document.querySelector('.colors')!.innerHTML = result;
 }
 
-// == Initialisation
+// APP INIT
 renderNbColors();
 renderGradient();
 renderColors();
 
-// store.subscribe permet de s'abonner à un changement de state
+// STORE INIT (store.subscribe permet de s'abonner à un changement de state)
 // A chaque fois qu'une donnée stocker dans mon store va être modifier, je pourrais exécuter une fonction
 store.subscribe(() => {
   // A chaque fois que mes données change, je met à jour mon interface
@@ -65,17 +64,20 @@ store.subscribe(() => {
   renderColors();
 });
 
-// == Controls
+// EVENTS LISTERNERS
+// Emettre === dispatch une action / intention à tous les reducers
+// La convention de redux veut que l'action soit un objet avec une propriété `type`
 document.getElementById('randAll')!.addEventListener('click', () => {
-  // data
-  state.nbColors += 2;
-  state.firstColor = randomHexColor();
-  state.lastColor = randomHexColor();
+  store.dispatch({
+    type: 'CHANGE_ALL_COLORS',
+    payload: {
+      firstRandomColor: randomHexColor(),
+      secondRandomColor: randomHexColor(),
+    },
+  });
 });
 
 document.getElementById('randFirst')!.addEventListener('click', () => {
-  // Je vais emettre, je vais dispatch une action / intention à tous les reducers
-  // La convention de redux veut que l'action soit un objet avec une propriété `type`
   store.dispatch({
     type: 'CHANGE_FIRST_COLOR',
     payload: randomHexColor(),
@@ -90,15 +92,13 @@ document.getElementById('randLast')!.addEventListener('click', () => {
 });
 
 document.getElementById('toLeft')!.addEventListener('click', () => {
-  // data
-  // TODO: Faire le changement de direction à gauche
-  // Modifier dans le store redux la direction pour mettre à 270deg
-  // state.direction = '270deg';
+  store.dispatch({
+    type: 'CHANGE_DIRECTION_TO_270',
+  });
 });
 
 document.getElementById('toRight')!.addEventListener('click', () => {
-  // data
-  // TODO: Faire le changement de direction à droite
-  // Modifier dans le store redux la direction pour mettre à 90deg
-  // state.direction = '90deg';
+  store.dispatch({
+    type: 'CHANGE_DIRECTION_TO_90',
+  });
 });
