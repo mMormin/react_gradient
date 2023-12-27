@@ -13,6 +13,9 @@ function colorReducer(
   state = initialState,
   action: AnyAction = { type: '@@INIT' }
 ): AppState {
+  const directionNumber = parseFloat(state.direction);
+  const increment = directionNumber + 45;
+  const decrement = directionNumber - 45;
   switch (action.type) {
     case 'CHANGE_FIRST_COLOR':
       return {
@@ -34,11 +37,23 @@ function colorReducer(
         ...state,
         direction: '270deg',
       };
-  
+
     case 'CHANGE_DIRECTION_TO_90':
       return {
         ...state,
         direction: '90deg',
+      };
+
+    case 'ROTATE_GRADIENT_INCREMENT_45':
+      return {
+        ...state,
+        direction: `${increment}deg`,
+      };
+
+    case 'ROTATE_GRADIENT_DECREMENT_45':
+      return {
+        ...state,
+        direction: `${decrement}deg`,
       };
 
     case 'CHANGE_ALL_COLORS':

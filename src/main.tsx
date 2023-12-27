@@ -102,3 +102,17 @@ document.getElementById('toRight')!.addEventListener('click', () => {
     type: 'CHANGE_DIRECTION_TO_90',
   });
 });
+
+document.getElementById('rotateGradientAdd')!.addEventListener('click', () => {
+  store.dispatch({
+    type: 'ROTATE_GRADIENT_INCREMENT_45',
+  });
+});
+
+document
+  .getElementById('rotateGradientRemove')!
+  .addEventListener('click', () => {
+    store.dispatch({
+      type: 'ROTATE_GRADIENT_DECREMENT_45',
+    });
+  });
